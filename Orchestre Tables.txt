@@ -1,0 +1,55 @@
+CREATE TABLE  IF NOT EXISTS Concert(
+	nom varChar(100) PRIMARY KEY NOT NULL,
+	nomOrchestre VARCHAR(100),
+	date DATE,
+	lieu VARCHAR(100),
+	prix INT
+)
+
+CREATE TABLE  IF NOT EXISTS Musicien(
+	nom varChar(100) PRIMARY KEY NOT NULL,
+	instrument VARCHAR(100),
+	anneeExperience VARCHAR(100),
+	nomOrchestre VARCHAR(100)
+)
+
+CREATE TABLE  IF NOT EXISTS Orchestre(
+	nom varChar(100) PRIMARY KEY NOT NULL,
+	style varChar(100),
+	chef varChar(100)
+)
+
+
+
+INSERT INTO Concert
+VALUES('Ultrall','orchestre1','2021-06-15','Stade de France','500'),
+	('Die rich or trie dying','orchestre2','2004-09-03','Stade de France','100'),
+	('Ultral','orchestre1','2014-09-05','Stade de France','600'),
+	('Life','orchestre3','2020-11-22','Dubai','400'),
+	('Fiestea','orchestre3','2010-07-12','Miami','50'),
+	('Power','orchestre2','1997-08-16','Douala','1000'),
+	('Mozart','orchestre5','2019-04-20','Opéra bastille','10'),
+	('Zen','orchestre7','2015-02-22','LA','50'),
+	('Relax','orchestre6','2015-02-02','PARIS','200')
+	
+
+
+INSERT INTO Musicien
+VALUES('Yannick','guitare','10','orchestre1'),
+	('Patrick','piano','10','orchestre1'),
+	('Cedric','violon','10','orchestre1'),
+	('Jordan','batterie','2','orchestre2'),
+	('Gaelle','saxophone','4','orchestre3'),
+	('Georges','harmonica','20','orchestre6')
+
+
+INSERT INTO Orchestre
+VALUES('orchestre1','jazz','leonardo'),
+	('orchestre2','pop','michaelgo'),
+	('orchestre3','mb','raphael'),
+	('orchestre4','house','doantello'),
+	('orchestre5','classic','Smith'),
+	('orchestre6','classic','Smith'),
+	('orchestre7','blues','Ray')
+
+

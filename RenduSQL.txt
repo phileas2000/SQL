@@ -1,0 +1,231 @@
+Partie 1
+
+1-
+SELECT  FROM Client
+2-
+SELECT nom,anneeNaiss,ville FROM Client
+3-
+SELECT  FROM Client WHERE anneeNaiss  YEAR(NOW())-50
+4-
+SELECT DISTINCT label FROM produit
+5-
+SELECT DISTINCT label FROM produit ORDER BY label ASC )
+6-
+SELECT  FROM commande WHERE qte BETWEEN 8 AND 18 
+7-
+SELECT  FROM commande WHERE qte  8 AND qte  18 
+8-
+SELECT nom,ville FROM client WHERE nom LIKE 'P%' 
+9-
+SELECT nom,ville FROM fournisseur WHERE ville LIKE '%Paris%' 
+10-
+SELECT prix FROM produit INNER JOIN fournisseur ON id = idF WHERE label IN (sable,parpaing) 
+11-
+SELECT prix FROM produit INNER JOIN fournisseur ON id = idF WHERE label = sable OR label = parpaing 
+12-
+SELECT nom,label1P,qte FROM client INNER JOIN commande ON idC
+13-
+SELECT nom,label1P,qte FROM client,commande WHERE id IN (SELECT idC FROM commande) 
+14-
+SELECT nom,label1P FROM client,commande #le nombre de ligne est très élevé du au produit cartésien, longueur 1 longueur2
+15-
+SELECT nom FROM `client` INNER JOIN commande ON idC=id AND label1P='briques' ORDER BY nom ASC 
+16-
+SELECT nom FROM fournisseur INNER JOIN produit ON idF=id AND label='briques' OR 'parpaing' 
+17-
+SELECT nom FROM fournisseur WHERE id= (SELECT idF FROM produit WHERE id=idF AND label='briques' OR 'parpaing') #même ordre que requête précédente
+22-
+SELECT DISTINCT label FROM produit INNER JOIN fournisseur ON idF = id AND ville LIKE '%Paris%' 
+23-
+SELECT DISTINCT label FROM produit WHERE idF=(SELECT id FROM fournisseur WHERE ville LIKE '%Paris%') 
+24-
+SELECT DISTINCT label FROM produit ,fournisseur WHERE idF=id AND ville LIKE '%Paris%' 
+25-
+SELECT nom,ville FROM `client` INNER JOIN commande ON id=idC AND label1P ='briques' AND qte BETWEEN 10 AND 15 
+26-
+SELECT fournisseur.nom,produit.label,produit.prix FROM `client` INNER JOIN commande ON id =idC AND nom='Jean' INNER JOIN produit ON label1P = label INNER JOIN fournisseur ON idF = fournisseur.id  #requête impossbile, pas de jonction entre COMMANDE et FOURNISSEUR
+27-
+SELECT fournisseur.nom,produit.label,produit.prix FROM `client` INNER JOIN commande ON id =idC AND nom='Jean' INNER JOIN produit ON label1P = label INNER JOIN fournisseur ON idF = fournisseur.id ORDER BY fournisseur.nom ASC,produit.label DESC  #requête impossbile, pas de jonction entre COMMANDE et FOURNISSEUR 
+28-
+SELECT label,AVG(prix) FROM produit GROUP BY label
+29-
+SELECT label,AVG(prix) FROM produit WHERE prix1200 GROUP BY label
+30-
+SELECT label,idF,prix FROM produit WHERE prix  (SELECT AVG(prix) FROM produit) 
+31-
+SELECT label ,AVG(prix) FROM produit WHERE 3 = (SELECT count(id) FROM fournisseur WHERE idF=id ) GROUP BY label
+
+
+Partie 2
+
+
+
+mf01
+ SELECT nom, instrument FROM Musicien WHERE anneeExperience5;
+ 
+mf02
+SELECT instrument FROM Musicien WHERE nomOrchestre = 'Jazz92';
+
+mf03
+SELECT  FROM Musicien WHERE instrument ='violon';
+
+mf04
+SELECT instrument FROM Musicien WHERE anneeExperience19;
+
+mf05
+SELECT nom FROM Musicien WHERE anneeExperience BETWEEN 5 AND 10;
+ 
+mf06
+SELECT instrument FROM Musicien WHERE instrument LIKE 'vio%';
+
+mf07
+SELECT nom FROM Orchestre WHERE style='jazz';
+
+mf08
+SELECT nom FROM Orchestre WHERE chef='John Smith';
+
+mf09
+SELECT nom FROM Concert ORDER BY nom;
+
+mf010
+SELECT nom, lieu, date_ FROM Concert WHERE date_='2015-12-31' AND lieu='Versailles';
+
+mf011
+SELECT lieu FROM Concert WHERE prix 150;
+
+mf012
+SELECT nom FROM Concert WHERE lieu='Opéra Bastille' AND prix 50;
+
+mf013
+SELECT nom FROM Concert WHERE date_ LIKE '2014%';
+
+
+
+
+
+mmtj01
+SELECT musicien.nom,instrument FROM Musicien WHERE anneeExperience  3 AND nomOrchestre ='jazz' ORDER BY nom ;
+
+mmtj01
+SELECT lieu, chef FROM Concert,Orchestre WHERE Concert.nom = Orchestre.nom AND chef = 'Smith' AND prix20 ORDER BY lieu;
+
+SELECT lieu FROM Concert
+WHERE prix20
+AND nomOrchestre IN
+(
+    SELECT nom FROM  Orchestre
+    WHERE chef = 'Smith' 
+)
+ORDER BY lieu;
+
+
+SELECT lieu, chef FROM Concert
+JOIN Orchestre
+ON Concert.nomOrchestre = Orchestre.nom 
+WHERE chef = 'Smith' 
+AND prix21 
+ORDER BY lieu;
+
+mmtj01
+SELECT count(nomOrchestre) FROM Concert
+JOIN Orchestre 
+ON Concert.nomOrchestre = Orchestre.nom
+WHERE style = 'blues' AND date_ = '2015%';
+
+mmtj01
+SELECT AVG(prix) FROM Concert 
+JOIN orchestre 
+ON Concert.nomOrchestre = Orchestre.nom
+WHERE style = 'jazz' GROUP BY lieu;
+
+mmtj01
+SELECT instrument FROM Concert 
+JOIN Musicien
+ON Concert.nomOrchestre = Musicien.nomOrchestre
+JOIN orchestre
+ON musicien.nomOrchestre=orchestre.nom
+WHERE chef='Smith' AND date_='2016-01-01';
+
+mmtj01
+SELECT AVG(anneeExperience) FROM Musicien 
+JOIN orchestre
+ON Musicien.nomOrchestre = orchestre.nom
+WHERE instrument = 'trompette' GROUP BY style;
+
+
+-mmts01
+SELECT nom,instrument FROM musicien WHERE nomOrchestre=(SELECT nom FROM orchestre WHERE style='jazz') AND anneeExperience 3  ORDER by nom ASC
+-mmts02
+SELECT lieu FROM concert WHERE nomOrchestre IN (SELECT nom FROM orchestre WHERE chef='Smith') AND prix  20 ORDER BY name ASC
+-mmts03
+SELECT count(nom) FROM `concert` WHERE nomOrchestre=(SELECT nom FROM orchestre WHERE style='blues') AND YEAR(date) = 2015 
+-mmts04
+SELECT AVG(prix),lieu FROM concert GROUP BY lieu
+-mmts05
+SELECT instrument FROM musicien WHERE nomOrchestre IN (SELECT nom FROM orchestre WHERE chef = 'Smith' AND nom IN (SELECT nomOrchestre FROM concert WHERE date ='2021-01-01')) 
+
+
+
+ Partie 3
+
+
+
+vf01
+SELECT appellation FROM Vin WHERE annee LIKE '1995%';
+vf02
+SELECT appellation, couleur, annee,degre FROM Vin 
+WHERE annee  2000;
+vf03
+SELECT appellation FROM Vin WHERE annee BETWEEN 2000 AND 2009;
+vf04
+SELECT appellation FROM Vin WHERE couleur = 'Blanc' AND degre  14;
+vf05
+SELECT appellation FROM Vin WHERE appellation LIKE '%AOC%';
+vf06
+SELECT domaine FROM Producteur WHERE region ='Bordeaux';
+vf07
+SELECT nom, region FROM producteur WHERE numProd=5;
+vf08
+SELECT nom FROM Producteur WHERE region = 'Beaujolais';
+vf09
+SELECT  FROM Producteur WHERE nom LIKE 'Dupon%'; 
+vf10
+SELECT nom FROM Producteur ORDER BY nom;
+
+
+
+vm01
+SELECT annee FROM vin ORDER BY AVG(degre) DESC,couleur
+vm02
+SELECT  FROM vin WHERE degre(SELECT AVG(degre) FROM vin) ORDER BY couleur ASC,degre DESC 
+vm03
+SELECT MIN(degre),MAX(DEGRE),couleur,appelation FROM vin GROUP BY appelation,couleur 
+
+
+
+
+vmts01
+SELECT nom FROM producteur WHERE numProd IN (SELECT nProd FROM récolte WHERE quantite  50 AND 20 IN (SELECT numVin FROM vin)) 
+vmts02
+SELECT count(nProd) FROM récolte INNER JOIN vin ON nVin=numVin AND couleur = 'Rouge' AND annee=2014 
+vmts03
+SELECT SUM(quantite),annee FROM récolte INNER JOIN vin ON numVin=nVin AND couleur='blanc' GROUP BY annee
+vmts04
+SELECT AVG(degre),annee FROM vin WHERE couleur='blanc' GROUP BY annee
+vmts05
+SELECT nom,domaine FROM producteur INNER JOIN récolte ON numProd= nProd INNER JOIN vin ON nVin=numVin AND couleur='rouge' 
+vmts21
+SELECT appelation,numProd,quantite FROM vin INNER JOIN récolte ON numVin=nVin AND quantite=200 AND annee=1999 INNER JOIN producteur ON numProd =nProd
+
+
+
+
+
+vmts01
+SELECT nom FROM producteur INNER JOIN récolte ON nProd=numProd AND quantite  50 INNER JOIN vin ON numVin=20 
+vmts02
+SELECT count(nProd) FROM récolte WHERE nVin IN(SELECT numVIn FROM vin WHERE couleur = 'Rouge' AND annee=2014) 
+vmts03
+SELECT AVG(degre),annee FROM vin WHERE couleur='blanc' GROUP BY annee
+vmts04
+SELECT nom,domaine FROM producteur WHERE numProd IN (SELECT nProd FROM récolte WHERE nVin IN (SELECT numVin FROM vin WHERE couleur='rouge')) 

@@ -1,0 +1,92 @@
+CREATE TABLE  IF NOT EXISTS Client(
+	id INT PRIMARY KEY NOT NULL,
+	nom VARCHAR(100),
+	anneeNaiss INT,
+	ville VARCHAR(100)
+)
+
+CREATE TABLE  IF NOT EXISTS Fournisseur(
+	id INT PRIMARY KEY NOT NULL,
+	nom VARCHAR(100),
+	age INT,
+	ville VARCHAR(100)
+)
+
+CREATE TABLE  IF NOT EXISTS Produit(
+	label VARCHAR(100) NOT NULL,
+	idF INT NOT NULL,
+	prix INT,
+	PRIMARY KEY(label,idF),
+	FOREIGN KEY(idF) REFERENCES Fournisseur(id)
+)
+
+
+
+CREATE TABLE  IF NOT EXISTS Commande(
+	num INT NOT NULL,
+	idC INT NOT NULL,
+	label1P VARCHAR(100),
+	qte INT,
+	PRIMARY KEY(num,idc,label1P),
+	FOREIGN KEY(idC) REFERENCES Client(id),
+	FOREIGN KEY(label1P) REFERENCES Produit(label)
+
+)
+
+
+
+
+INSERT INTO Client 
+VALUES('1','Jean','1965','75006 Paris'), 
+	('2','Paul','1958','75003 Paris'), 
+	('3','Vincent','1954','94200 Evry'), 
+	('4','Pierre','1950','92400 Courbevoie'), 
+	('5','Daniel','1963','44000 Nantes') 
+
+
+INSERT INTO Fournisseur
+VALUES('1','Abounayan','52','92190 Meudon'),
+('2','Cima','37','44150 Nantes'),
+('3','Preblocs','48','92230 Genneviliers'),
+('4','Samaco','61','75018 Paris'),
+('5','Damasco','29','49100 Angers')
+
+INSERT INTO Produit
+VALUES('sable','idF','prix'),
+('sable','1','30'),
+('briques','1','1500'),
+('parpaing','1','1150'),
+('sable','2','350'),
+('tuiles','3','1200'),
+('parpaing','3','1300'),
+('briques','4','1500'),
+('ciment','4','1300'),
+('parpaing','4','1450'),
+('briques','5','1450'),
+('tuiles','5','1100')
+
+INSERT INTO Commande
+VALUES('1','1','briques','5'),
+	('1','1','ciment','10'),
+	('2','2','briques','12'),
+	('2','2','sables','9'),
+	('2','2','parpaing','15'),
+	('3','3','sables','17'),
+	('4','4','briques','8'),
+	('4','4','tuiles','17'),
+	('5','5','parpaing','10'),
+	('6','5','briques','21'),
+	('7','2','ciment','12'),
+	('8','4','parpaing','8'),
+	('9','1','tuiles','15')
+
+
+
+
+
+
+
+
+
+
+
